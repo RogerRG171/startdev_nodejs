@@ -16,7 +16,11 @@ app.get("/clientes/:id", function (req, res) {
   const { id } = req.params;
   const cliente = clientes.filter((c) => c.id == id);
 
-  res.status(200).send(cliente);
+  if (cliente?.length > 0) {
+    res.status(200).send(cliente);
+  } else {
+    res.status(204).send("Id não encontrado");
+  }
 });
 
 app.listen(3005, () => {
