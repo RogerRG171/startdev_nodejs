@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-const clientes = [
+let clientes = [
   { id: 1, name: "Maria", status: true },
 
   { id: 2, name: "Joao", status: false },
@@ -35,6 +35,18 @@ app.post("/clientes", async function (req, res) {
     res.status(201).send({ message: "Cliente salvo com sucesso!" });
   } else {
     console.log(clientes);
+    res.status(204).send();
+  }
+});
+
+app.delete("/clientes/:id", function (req, res) {
+  const id = Number.parseInt(req.params.id);
+  const cliente = clientes.find((c) => c.id === id);
+  if (cliente?.id) {
+    clientes = clientes.filter((c) => c.id !== id);
+    console.log(clientes);
+    res.status(200).send({ message: "Cliente excluido com sucesso!" });
+  } else {
     res.status(204).send();
   }
 });
