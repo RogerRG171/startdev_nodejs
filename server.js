@@ -51,6 +51,20 @@ app.delete("/clientes/:id", function (req, res) {
   }
 });
 
+app.put("/clientes/:id", function (req, res) {
+  const id = Number.parseInt(req.params.id);
+  const novoCliente = req.body;
+  const index = clientes.findIndex((c) => c.id === id);
+  if (index !== -1) {
+    const cliente = { id, name: novoCliente.name, status: novoCliente.status };
+    clientes[index] = cliente;
+    console.log(clientes);
+    res.status(200).send(cliente);
+  } else {
+    res.status(204).send();
+  }
+});
+
 app.listen(3005, () => {
   console.log("servidor rodando na porta 3005");
 });
